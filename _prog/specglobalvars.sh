@@ -21,3 +21,7 @@ _prepare_splice() {
 _prepare_prog() {
 	true
 }
+
+_prepare_build_prog() {
+	mkdir -p "$scriptAbsoluteFolder"/build
+}
