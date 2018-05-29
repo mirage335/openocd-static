@@ -38,6 +38,7 @@ _build_prog_sequence() {
 	local localFunctionEntryPWD
 	localFunctionEntryPWD="$PWD"
 	
+	_messageNormal 'BUILD: Product: Init'
 	
 	local targetArch
 	targetArch=$(gcc -v 2>&1 | awk '/Target/ { print $2 }')
@@ -56,14 +57,15 @@ _build_prog_sequence() {
 	_build_transfer_dir "$scriptLib"/openocd-code "$safeTmp"/build/openocd-code .
 	
 	## eUDEV
+	_messageNormal 'BUILD: eUDEV'
 	if [[ "$targetArch" != *'darwin'* ]]
 	then
 		cd "$safeTmp"/build/eudev
 		export UDEV_DIR=`pwd`
-		./autogen.sh
-		./configure --enable-static --disable-shared --disable-blkid --disable-kmod  --disable-manpages
-		make clean
-		make -j4
+		! ./autogen.sh && _messageFAIL 'FAIL: autoregen' && _stop 1
+		! ./configure --enable-static --disable-shared --disable-blkid --disable-kmod  --disable-manpages && _messageFAIL 'FAIL: configure' && _stop 1
+		! make clean && _messageFAIL 'FAIL: make clean' && _stop 1
+		! make -j4 && _messageFAIL 'FAIL: make' && _stop 1
 
 		export CFLAGS="-I$UDEV_DIR/src/libudev/"
 		export LDFLAGS="-L$UDEV_DIR/src/libudev/.libs/"
@@ -71,11 +73,13 @@ _build_prog_sequence() {
 	fi
 	
 	## LibUSB
+	_messageNormal 'BUILD: LibUSB'
 	cd "$safeTmp"/build/libusb
 	export LIBUSB_DIR=`pwd`
-	./configure --enable-static --disable-shared
-	make clean
-	make
+	! ./bootstrap && _messageFAIL 'FAIL: bootstrap' && _stop 1
+	! ./configure --enable-static --disable-shared && _messageFAIL 'FAIL: configure' && _stop 1
+	! make clean && _messageFAIL 'FAIL: make clean' && _stop 1
+	! make && _messageFAIL 'FAIL: make' && _stop 1
 	
 	export LIBUSB1_CFLAGS="-I$LIBUSB_DIR/libusb/"
 	export LIBUSB1_LIBS="-L$LIBUSB_DIR/libusb/.libs/ -lusb-1.0 -lpthread"
@@ -84,12 +88,13 @@ _build_prog_sequence() {
 	export LIBUSB_1_0_LIBS="-L$LIBUSB_DIR/libusb/.libs/ -lusb-1.0 -lpthread"
 	
 	## LibUSB-Compat
+	_messageNormal 'BUILD: LibUSB-Compat'
 	cd "$safeTmp"/build/libusb-compat-0.1_git
 	export LIBUSB0_DIR=`pwd`
-	autoreconf
-	./configure --enable-static --disable-shared
-	make clean
-	make
+	! autoreconf && _messageFAIL 'FAIL: autoreconf' && _stop 1
+	! ./configure --enable-static --disable-shared && _messageFAIL 'FAIL: configure' && _stop 1
+	! make clean && _messageFAIL 'FAIL: make clean' && _stop 1
+	! make && _messageFAIL 'FAIL: make' && _stop 1
 	
 	export libusb_CFLAGS="-I$LIBUSB_DIR/libusb/"
 	export libusb_LIBS="-L$LIBUSB_DIR/libusb/.libs/ -lusb-1.0 -lpthread"
@@ -97,8 +102,9 @@ _build_prog_sequence() {
 	export libudev_LIBS="-L$UDEV_DIR/src/libudev/.libs/ -ludev"
 	
 	## HIDAPI
+	_messageNormal 'BUILD: HIDAPI'
 	cd "$safeTmp"/build/hidapi
-	./bootstrap
+	! ./bootstrap && _messageFAIL 'FAIL: bootstrap' && _stop 1
 	export HIDAPI_DIR=`pwd`
 	./configure --enable-static --disable-shared
 	make clean
@@ -106,8 +112,9 @@ _build_prog_sequence() {
 	
 	
 	## PRODUCT - OpenOCD
+	_messageNormal 'BUILD: Product: Complete'
 	cd "$safeTmp"/build/openocd-code
-	./bootstrap
+	! ./bootstrap && _messageFAIL 'FAIL: bootstrap' && _stop 1
 	export LIBUSB0_CFLAGS="-I$LIBUSB0_DIR/libusb/" 
 	export LIBUSB0_LIBS="-L$LIBUSB0_DIR/libusb/.libs/ -lusb -lpthread" 
 	export LIBUSB1_CFLAGS="-I$LIBUSB_DIR/libusb/" 
@@ -121,10 +128,10 @@ _build_prog_sequence() {
 	fi
 
 	export CFLAGS="-DHAVE_LIBUSB_ERROR_NAME"
-	PKG_CONFIG_PATH=`pwd` ./configure --disable-werror --prefix="$scriptAbsoluteFolder"/build
-	make clean
-	CFLAGS=-static make
-	make install
+	! PKG_CONFIG_PATH=`pwd` ./configure --disable-werror --prefix="$scriptAbsoluteFolder"/build && _messageFAIL 'FAIL: configure' && _stop 1
+	! make clean && _messageFAIL 'FAIL: make clean' && _stop 1
+	! CFLAGS=-static make && _messageFAIL 'FAIL: make' && _stop 1
+	! make install && _messageFAIL 'FAIL: make install' && _stop 1
 
 	
 	

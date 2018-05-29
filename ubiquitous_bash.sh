@@ -7764,7 +7764,9 @@ _build_prog_sequence() {
 	_build_transfer_dir "$scriptLib"/libusb-compat-0.1_git "$safeTmp"/build/libusb-compat-0.1_git .
 	_build_transfer_dir "$scriptLib"/hidapi "$safeTmp"/build/hidapi .
 	
+	_build_transfer_dir "$scriptLib"/openocd-code "$safeTmp"/build/openocd-code .
 	
+	## eUDEV
 	if [[ "$targetArch" != *'darwin'* ]]
 	then
 		cd "$safeTmp"/build/eudev
@@ -7779,8 +7781,62 @@ _build_prog_sequence() {
 		export LIBS="-ludev"
 	fi
 	
+	## LibUSB
+	cd "$safeTmp"/build/libusb
+	export LIBUSB_DIR=`pwd`
+	./configure --enable-static --disable-shared
+	make clean
+	make
+	
+	export LIBUSB1_CFLAGS="-I$LIBUSB_DIR/libusb/"
+	export LIBUSB1_LIBS="-L$LIBUSB_DIR/libusb/.libs/ -lusb-1.0 -lpthread"
+
+	export LIBUSB_1_0_CFLAGS="-I$LIBUSB_DIR/libusb/"
+	export LIBUSB_1_0_LIBS="-L$LIBUSB_DIR/libusb/.libs/ -lusb-1.0 -lpthread"
+	
+	## LibUSB-Compat
+	cd "$safeTmp"/build/libusb-compat-0.1_git
+	export LIBUSB0_DIR=`pwd`
+	autoreconf
+	./configure --enable-static --disable-shared
+	make clean
+	make
+	
+	export libusb_CFLAGS="-I$LIBUSB_DIR/libusb/"
+	export libusb_LIBS="-L$LIBUSB_DIR/libusb/.libs/ -lusb-1.0 -lpthread"
+	export libudev_CFLAGS="-I$UDEV_DIR/src/libudev/"
+	export libudev_LIBS="-L$UDEV_DIR/src/libudev/.libs/ -ludev"
+	
+	## HIDAPI
+	cd "$safeTmp"/build/hidapi
+	./bootstrap
+	export HIDAPI_DIR=`pwd`
+	./configure --enable-static --disable-shared
+	make clean
+	make -j4
 	
 	
+	## PRODUCT - OpenOCD
+	cd "$safeTmp"/build/openocd-code
+	./bootstrap
+	export LIBUSB0_CFLAGS="-I$LIBUSB0_DIR/libusb/" 
+	export LIBUSB0_LIBS="-L$LIBUSB0_DIR/libusb/.libs/ -lusb -lpthread" 
+	export LIBUSB1_CFLAGS="-I$LIBUSB_DIR/libusb/" 
+	export LIBUSB1_LIBS="-L$LIBUSB_DIR/libusb/.libs/ -lusb-1.0 -lpthread" 
+	export HIDAPI_CFLAGS="-I$HIDAPI_DIR/hidapi/"
+
+	if [[ "$targetArch" != *darwin* ]]; then
+		export HIDAPI_LIBS="-L$HIDAPI_DIR/linux/.libs/ -L$HIDAPI_DIR/libusb/.libs/ -lhidapi-hidraw -lhidapi-libusb"
+	else
+		export HIDAPI_LIBS="-L$HIDAPI_DIR/mac/.libs/ -L$HIDAPI_DIR/libusb/.libs/ -lhidapi"
+	fi
+
+	export CFLAGS="-DHAVE_LIBUSB_ERROR_NAME"
+	PKG_CONFIG_PATH=`pwd` ./configure --disable-werror --prefix="$scriptAbsoluteFolder"/build
+	make clean
+	CFLAGS=-static make
+	make install
+
 	
 	
 	cd "$localFunctionEntryPWD"
