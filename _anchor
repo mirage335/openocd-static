@@ -365,7 +365,7 @@ export anchorScriptAbsoluteFolder=$(_getScriptAbsoluteFolder)
 export anchorName=$(basename "$anchorScriptAbsoluteLocation")
 
 export anchorSource="ubiquitous_bash.sh"
-export anchorSourcePath=ubiquitous_bash/"$anchorSource"
+export anchorSourcePath=openocd-static/"$anchorSource"
 
 export anchorLabName=anchorLabName
 export anchorLabNameAlt="$anchorLabName"Mini

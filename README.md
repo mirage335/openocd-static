@@ -11,6 +11,10 @@ See license.txt for openocd-static license conditions.
 # Safety
 
 
+# Reference
+https://github.com/facchinm/openocd-build-script-static/blob/master/compile_unix_openocd.sh
+
+
 __Copyright__
 This file is part of openocd-static.
 
