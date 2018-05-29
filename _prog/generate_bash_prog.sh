@@ -1,8 +1,6 @@
 _generate_compile_bash_prog() {
 	"$scriptAbsoluteLocation" _true
 	
-	return
-	
 	rm "$scriptAbsoluteFolder"/ubiquitous_bash.sh
 	
 	#"$scriptAbsoluteLocation" _compile_bash cautossh cautossh
