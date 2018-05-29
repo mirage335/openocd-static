@@ -8,9 +8,6 @@ See license.txt for openocd-static license conditions.
 # Design
 
 
-# Safety
-
-
 # Reference
 https://github.com/facchinm/openocd-build-script-static/blob/master/compile_unix_openocd.sh
 
