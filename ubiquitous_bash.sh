@@ -7730,6 +7730,18 @@ _fetch_prog() {
 	true
 }
 
+_build_transfer() {
+	[[ "$1" == "" ]] && return 1
+	[[ "$2" == "" ]] && return 1
+	[[ "$3" == "" ]] && return 1
+	rsync -q -ax --exclude "/.git" "$1"/"$3" "$2"/"$3"
+}
+
+_build_transfer_dir() {
+	mkdir -p "$2"
+	_build_transfer "$@"
+}
+
 #"$1" == "targetArch"
 _build_prog_sequence() {
 	_start
@@ -7745,9 +7757,17 @@ _build_prog_sequence() {
 	#disable pkg-config
 	export PKG_CONFIG_PATH="$scriptAbsoluteFolder"/build
 	
+	mkdir -p "$safeTmp"/build
+	
+	_build_transfer_dir "$scriptLib"/eudev "$safeTmp"/build/eudev .
+	_build_transfer_dir "$scriptLib"/libusb "$safeTmp"/build/libusb .
+	_build_transfer_dir "$scriptLib"/libusb-compat-0.1_git "$safeTmp"/build/libusb-compat-0.1_git .
+	_build_transfer_dir "$scriptLib"/hidapi "$safeTmp"/build/hidapi .
+	
+	
 	if [[ "$targetArch" != *'darwin'* ]]
 	then
-		cd "$scriptLib"/eudev
+		cd "$safeTmp"/build/eudev
 		export UDEV_DIR=`pwd`
 		./autogen.sh
 		./configure --enable-static --disable-shared --disable-blkid --disable-kmod  --disable-manpages
@@ -7758,6 +7778,9 @@ _build_prog_sequence() {
 		export LDFLAGS="-L$UDEV_DIR/src/libudev/.libs/"
 		export LIBS="-ludev"
 	fi
+	
+	
+	
 	
 	
 	cd "$localFunctionEntryPWD"
