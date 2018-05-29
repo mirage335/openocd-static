@@ -9,6 +9,7 @@
       "metrics"
       "welcome"
     ]
+    fileSystemWatcher: "poll"
     openEmptyEditorOnStart: false
     restorePreviousWindowsOnStart: "no"
     telemetryConsent: "no"
