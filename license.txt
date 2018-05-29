@@ -1,5 +1,5 @@
 openocd-static
-Copyright (C) 2018  m335
+Copyright (C) 2018  mirage335
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,4 +15,4 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software Foundation,
 Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 
-All files in this folder and subfolders, unless explicitly stated otherwise or copyrighted by other authors, are copyrighted by m335 as described above.
+All files in this folder and subfolders, unless explicitly stated otherwise or copyrighted by other authors, are copyrighted by mirage335 as described above.

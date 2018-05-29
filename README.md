@@ -1,4 +1,4 @@
-Copyright (C) 2018 m335
+Copyright (C) 2018 mirage335
 See the end of the file for license conditions.
 See license.txt for openocd-static license conditions.
 
