@@ -4,3 +4,6 @@
 [submodule "_lib/openocd-build-script-static"]
 	path = _lib/openocd-build-script-static
 	url = git@github.com:facchinm/openocd-build-script-static.git
+[submodule "_lib/openocd-code"]
+	path = _lib/openocd-code
+	url = git://git.code.sf.net/p/openocd/code
