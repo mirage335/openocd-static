@@ -1,0 +1,2 @@
+#Enable search if "vm.img" and related files are missing.
+export ubVirtImageLocal="false"
