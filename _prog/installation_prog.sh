@@ -24,7 +24,7 @@ _build_transfer() {
 	[[ "$1" == "" ]] && return 1
 	[[ "$2" == "" ]] && return 1
 	[[ "$3" == "" ]] && return 1
-	rsync -q -ax --exclude "/.git" "$1"/"$3" "$2"/"$3"
+	rsync -q -ax --exclude ".git" --exclude "README.git" "$1"/"$3" "$2"/"$3"
 }
 
 _build_transfer_dir() {
@@ -66,7 +66,7 @@ _build_prog_sequence() {
 		! ./autogen.sh && _messageError 'FAIL: autoregen' && _stop 1
 		! ./configure --enable-static --disable-shared --disable-blkid --disable-kmod  --disable-manpages && _messageError 'FAIL: configure' && _stop 1
 		! make clean && _messageError 'FAIL: make clean' && _stop 1
-		! make -j4 && _messageError 'FAIL: make' && _stop 1
+		! make -j8 && _messageError 'FAIL: make' && _stop 1
 
 		export CFLAGS="-I$UDEV_DIR/src/libudev/"
 		export LDFLAGS="-L$UDEV_DIR/src/libudev/.libs/"
