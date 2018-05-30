@@ -16,3 +16,6 @@
 [submodule "_lib/libusb"]
 	path = _lib/libusb
 	url = git@github.com:libusb/libusb.git
+[submodule "_lib/libusb-compat-0.1_git"]
+	path = _lib/libusb-compat-0.1_git
+	url = git@github.com:libusb/libusb-compat-0.1.git
