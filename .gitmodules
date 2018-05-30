@@ -10,3 +10,6 @@
 [submodule "_lib/eudev"]
 	path = _lib/eudev
 	url = git@github.com:gentoo/eudev.git
+[submodule "_lib/hidapi"]
+	path = _lib/hidapi
+	url = git@github.com:signal11/hidapi.git
