@@ -13,3 +13,6 @@
 [submodule "_lib/hidapi"]
 	path = _lib/hidapi
 	url = git@github.com:signal11/hidapi.git
+[submodule "_lib/libusb"]
+	path = _lib/libusb
+	url = git@github.com:libusb/libusb.git
