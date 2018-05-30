@@ -7,3 +7,6 @@
 [submodule "_lib/openocd-code"]
 	path = _lib/openocd-code
 	url = git://git.code.sf.net/p/openocd/code
+[submodule "_lib/eudev"]
+	path = _lib/eudev
+	url = git@github.com:gentoo/eudev.git
