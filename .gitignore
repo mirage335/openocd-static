@@ -48,11 +48,12 @@ nohup.out
 **/Public
 **/Templates
 **/Videos
-**/bin
 **/core
 **/project
 **/projects
 **/realHome
+
+_local/
 
 **/.java
 **/.oracle_jre*
