@@ -1,3 +1,5 @@
+/ops
+
 w_*/
 v_*/
 h_*/
@@ -8,11 +10,20 @@ vm.vdi
 vm.img
 vm*.img
 WARNING
+_local
+_index
 *.log
 devtask*
 devtask/
 USAGE.*.html
 _buried
+
+package.tar.gz
+
+id_rsa
+pubring.kbx
+pubring.kbx*
+trustdb.gpg
 
 \#*\#
 *~
@@ -62,3 +73,20 @@ _local/h/.arduino15/staging/
 
 _local/h
 _local/templates
+
+
+**/node_modules/pty.js/build/Makefile
+**/node_modules/pty.js/build/config.gypi
+**/node_modules/pty.js/build/pty.target.mk
+
+**/.atom/.apm
+
+**/.config/Atom/QuotaManager
+**/.config/Atom/QuotaManager-journal
+**/.config/Atom/QuotaManager*
+**/.config/Atom/Local Storage/
+**/.config/Atom/databases
+**/.config/Atom/Cookies
+**/.config/Atom/Cookies-journal
+**/.config/Atom/Cookies*
+**/.config/Atom/IndexedDB/
