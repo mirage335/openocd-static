@@ -163,8 +163,12 @@ _setup_udev() {
 	
 	sudo -n bash -c '[[ -e /etc/udev/rules.d/ ]]' && sudo -n cp -r "$scriptLib"/app/udev/rules/. /etc/udev/rules.d/
 	
-	
+	# WARNING: System groups are expected to have been created with correct uid/gid by other utilities prior to running these scripts.
+	#sudo -n groupadd plugdev
 	sudo -n usermod -a -G plugdev "$USER"
+	
+	#sudo -n groupadd dialout
+	sudo -n usermod -a -G dialout "$USER"
 }
 
 _setup_prog() {
