@@ -158,6 +158,7 @@ _testBuilt_prog() {
 	fi
 }
 
+# CAUTION: Reboot or relogin may be required to take effect.
 _setup_udev() {
 	! _wantSudo && echo 'denied: sudo' && _stop 1
 	
