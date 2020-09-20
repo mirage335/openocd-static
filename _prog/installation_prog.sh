@@ -152,7 +152,7 @@ _build_prog() {
 _testBuilt_prog() {
 	! [[ -e "$scriptAbsoluteFolder"/build/bin/openocd ]] && _stop 1
 	
-	if ! "$scriptAbsoluteFolder"/build/bin/openocd --help | grep 'Open On-Chip Debugger'
+	if ! "$scriptAbsoluteFolder"/build/bin/openocd --help 2>&1 | grep 'Open On-Chip Debugger' >/dev/null 2>&1
 	then
 		_stop 1
 	fi
