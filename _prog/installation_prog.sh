@@ -149,6 +149,15 @@ _build_prog() {
 	"$scriptAbsoluteLocation" _build_prog_sequence "$@"
 }
 
+_testBuilt_prog() {
+	! [[ -e "$scriptAbsoluteFolder"/build/bin/openocd ]] && _stop 1
+	
+	if ! "$scriptAbsoluteFolder"/build/bin/openocd --help | grep 'Open On-Chip Debugger'
+	then
+		_stop 1
+	fi
+}
+
 _setup_udev() {
 	! _wantSudo && echo 'denied: sudo' && _stop 1
 	
