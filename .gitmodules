@@ -1,6 +1,3 @@
-[submodule "_lib/ubiquitous_bash"]
-	path = _lib/ubiquitous_bash
-	url = git@github.com:mirage335/ubiquitous_bash.git
 [submodule "_lib/openocd-build-script-static"]
 	path = _lib/openocd-build-script-static
 	url = git@github.com:facchinm/openocd-build-script-static.git
@@ -19,3 +16,7 @@
 [submodule "_lib/libusb-compat-0.1_git"]
 	path = _lib/libusb-compat-0.1_git
 	url = git@github.com:libusb/libusb-compat-0.1.git
+[submodule "_lib/ubiquitous_bash"]
+	path = _lib/ubiquitous_bash
+	url = git@github.com:mirage335/ubiquitous_bash.git
+	shallow = true
